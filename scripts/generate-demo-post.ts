@@ -7,7 +7,10 @@ import { TEXT_ONLY_MODE } from "../src/agents/generate-post/constants.js";
  * This may be modified to generate posts for other content.
  */
 async function invokeGraph() {
-  const link = "https://blog.langchain.dev/customers-appfolio/";
+  const links = [
+    "https://www.talentassisto.com",
+    "https://docs.talentassisto.com",
+  ];
 
   const client = new Client({
     apiUrl: process.env.LANGGRAPH_API_URL || "http://localhost:54367",
@@ -16,7 +19,7 @@ async function invokeGraph() {
   const { thread_id } = await client.threads.create();
   await client.runs.create(thread_id, "generate_post", {
     input: {
-      links: [link],
+      links: links,
     },
     config: {
       configurable: {
